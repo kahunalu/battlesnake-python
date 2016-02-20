@@ -27,6 +27,7 @@ def start():
     data = bottle.request.json
 
     # TODO: Do things with data
+    print(taunts[data['turn']])
 
     return {
         'taunt': 'battlesnake-python!'
@@ -36,7 +37,6 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    print(taunts[data.turn])
 
 
     # TODO: Do things with data
