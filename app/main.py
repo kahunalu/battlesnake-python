@@ -1,7 +1,7 @@
 import bottle
 import os
 
-taunts = ["test1", "test2"]
+taunts = ["test1", "test2", "test3"]
 
 
 @bottle.route('/static/<path:path>')
@@ -30,7 +30,7 @@ def start():
     print(taunts[data['turn']])
 
     return {
-        'taunt': 'battlesnake-python!'
+        'taunt': taunts[0]
     }
 
 
@@ -43,7 +43,7 @@ def move():
 
     return {
         'move': 'north',
-        'taunt': 'battlesnake-python!'
+        'taunt': taunts[(data['turn'] % len(taunts))]
     }
 
 
