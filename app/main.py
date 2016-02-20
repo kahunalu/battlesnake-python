@@ -15,7 +15,7 @@ def index():
     )
 
     return {
-        'color': '#00ff00',
+        'color': '#5da36f',
         'head': head_url
     }
 
@@ -34,6 +34,7 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
+    print(data)
 
     # TODO: Do things with data
 
