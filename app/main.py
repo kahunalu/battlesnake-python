@@ -3,6 +3,7 @@ import os
 
 taunts = ["DO IT! JUST DO IT!", "DON'T LET YOUR DREAMSSSS BE DREAMSSSS.", "JUSSSST DO IT!", "IF YOU'RE TIRED OF SSSSTARTING OVER, SSSSTOP GIVING UP.", "YESSSS YOU CAN. JUST DO IT.", "NOTHING IS IMPOSSIBLE.", "YESSSS YOU CAN.", "NOTHING IS IMPOSSSSSSSSIBLE", "DON'T SSSSTOP!", "SSSSTOP GIVING UP", "YESSSS YOU CAN."]
 
+SHIA_ID = "6b1d5489-e9db-4673-bbce-0b65ee729519"
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -69,10 +70,19 @@ def get_mode(data):
 
 
 def default(data):
-    get_move(data["start"], data["food"][0], data["grid"])
+    shia = get_shia_snake(data)
+    get_move(shia["coords"][0], [0,0], data)
+
+
+def get_shia_snake(data):
+    for snake in data["snakes"]:
+        if snake["id"] == SHIA_ID:
+            return snake
 
 
 def get_move(start, goal, grid):
+    
+
     return {"North"}
 
 
