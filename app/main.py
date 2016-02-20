@@ -1,6 +1,8 @@
 import bottle
 import os
 
+taunts = ["test1", "test2"]
+
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -34,7 +36,8 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    print(data)
+    print(taunts[data.turn])
+
 
     # TODO: Do things with data
 
