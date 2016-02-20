@@ -80,7 +80,7 @@ def get_mode(data):
 
 def default(data):
     shia = get_shia_snake(data)
-    get_move(shia["coords"][0], data["food"][0], data)
+    return get_move(shia["coords"][0], data["food"][0], data)
 
 
 def get_shia_snake(data):
@@ -95,9 +95,11 @@ def get_move(start, goal, data):
 
     for snake in data["snakes"]:
         if snake["id"] == SHIA_ID:
-            wall_coords.append(tuple(snake["coords"][1:]))
+            for body in snake["coords"][1:]:
+                wall_coords.append(tuple(body))
         else:
-            wall_coords.append(tuple(snake["coords"]))
+            for body in snake["coords"]:
+                wall_coords.append(tuple(body))
 
     for wall in data["walls"]:
         wall_coords.append(tuple(wall))
