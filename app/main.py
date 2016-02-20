@@ -102,8 +102,6 @@ def get_move(start, goal, data):
     for wall in data["walls"]:
         wall_coords.append(tuple(wall))
 
-    wall_coords = tuple(wall_coords)
-
     print "WALL COORDS"
     print wall_coords
 
