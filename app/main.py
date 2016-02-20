@@ -80,7 +80,7 @@ def get_mode(data):
 
 def default(data):
     shia = get_shia_snake(data)
-    get_move(shia["coords"][0], [0,0], data)
+    get_move(shia["coords"][0], data["food"][0], data)
 
 
 def get_shia_snake(data):
