@@ -83,6 +83,14 @@ def get_mode(data):
         return default(data)
 
 
+def hungry(data):
+    shia = get_shia_snake(data)
+
+    if not len(data["food"]):
+        return default(data)
+
+    return get_move(shia["coords"][0], data["food"][0], data)
+
 def default(data):
     shia = get_shia_snake(data)
     return get_move(shia["coords"][0], data["food"][0], data)
