@@ -39,12 +39,14 @@ def start():
 def move():
     data = bottle.request.json
 
-<<<<<<< HEAD
-
     # TODO: Do things with data
-=======
+
+    # Remove dead snakes
+    for snake in data["snakes"]
+        if snake["status"] == "dead":
+            data["snakes"].remove(snake)
+
     get_mode(data)
->>>>>>> 0adf26be1f52bb3c750308267983813540dc1a89
 
     return {
         'move': 'north',
@@ -84,6 +86,36 @@ def get_move(start, goal, grid):
     
 
     return {"North"}
+
+def heuristic(a, b):
+    (x1, y1) = a
+    (x2, y2) = b
+    return abs(x1 - x2) + abs(y1 - y2)
+
+#Not done
+def a_star_search(grid, start, goal):
+    frontier = PriorityQueue()
+    frontier.put(start, 0)
+    came_from = {}
+    cost_so_far = {}
+    came_from[start] = None
+    cost_so_far[start] = 0
+
+    while not frontier.empty():
+        current = frontier.get()
+
+        if current == goal:
+            break
+
+        for next in grid.neighbors(current):
+            new_cost = cost_so_far[current] + grid.cost(current, next)
+            if next not in cost_so_far or new_cost < cost_so_far[next]:
+                cost_so_far[next] = new_cost
+                priority = new_cost + heuristic(goal, next)
+                frontier.put(next, priority)
+                came_from[next] = current
+
+    return came_from, cost_so_far
 
 
 # Expose WSGI app (so gunicorn can find it)
