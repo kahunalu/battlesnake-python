@@ -39,13 +39,6 @@ def start():
 def move():
     data = bottle.request.json
 
-<<<<<<< HEAD
-
-    # TODO: Do things with data
-=======
-    get_mode(data)
->>>>>>> 0adf26be1f52bb3c750308267983813540dc1a89
-
     return {
         'move': 'north',
         'taunt': taunts[(data['turn'] % len(taunts))]
@@ -80,8 +73,18 @@ def get_shia_snake(data):
             return snake
 
 
-def get_move(start, goal, grid):
-    
+def get_move(start, goal, data):
+    walls_coords = []
+
+    for snake in data["snakes"]:
+        if snake["id"] == SHIA_ID:
+            walls_coords += snake["coords"][1:]
+        else:
+            walls_coords += snake["coords"]
+
+    walls_coords += data["walls"]
+
+
 
     return {"North"}
 
