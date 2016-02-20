@@ -118,6 +118,11 @@ def get_move(start, goal, data):
 
 def convert_direction(start, coord):
 
+    print "DEBUG"
+
+    print start
+    print coord
+
     if start[0] > coord[0]:
         return "west"
     elif start[0] < coord[0]:
