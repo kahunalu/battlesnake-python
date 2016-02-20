@@ -40,6 +40,9 @@ def start():
 def move():
     data = bottle.request.json
 
+    if "walls" not in data:
+        data["walls"] = []
+
     '''
     # TODO: Do things with data
 
@@ -51,6 +54,7 @@ def move():
     get_mode(data)
     '''
 
+    print "Start"
     return {
         'move': get_mode(data),
         'taunt': taunts[(data['turn'] % len(taunts))]
