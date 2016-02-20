@@ -40,6 +40,17 @@ def start():
 def move():
     data = bottle.request.json
 
+    '''
+    # TODO: Do things with data
+
+    # Remove dead snakes
+    for snake in data["snakes"]
+        if snake["status"] == "dead":
+            data["snakes"].remove(snake)
+
+    get_mode(data)
+    '''
+
     return {
         'move': get_mode(data),
         'taunt': taunts[(data['turn'] % len(taunts))]
