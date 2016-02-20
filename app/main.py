@@ -104,11 +104,16 @@ def get_move(start, goal, data):
 
     wall_coords = tuple(wall_coords)
 
+    print "WALL COORDS"
+    print wall_coords
+
     a = AStar()
 
     a.init_grid(data["height"],data["width"],wall_coords,start,goal)
 
     solution = a.solve()
+
+    print solution
 
     if solution:
         return convert_direction(start, solution[1])
@@ -124,13 +129,17 @@ def convert_direction(start, coord):
     print coord
 
     if start[0] > coord[0]:
+        print "west"
         return "west"
     elif start[0] < coord[0]:
+        print "east"
         return "east"
 
     if start[1] > coord[1]:
+        print "north"
         return "north"
 
+    print "south"
     return "south"
 
 '''
