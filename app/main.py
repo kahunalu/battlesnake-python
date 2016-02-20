@@ -1,6 +1,7 @@
 import bottle
 import os
 
+SHIA_ID = "6b1d5489-e9db-4673-bbce-0b65ee729519"
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -61,10 +62,19 @@ def get_mode(data):
 
 
 def default(data):
-    get_move(data["start"], data["food"][0], data["grid"])
+    shia = get_shia_snake(data)
+    get_move(shia["coords"][0], [0,0], data)
+
+
+def get_shia_snake(data):
+    for snake in data["snakes"]:
+        if snake["id"] == SHIA_ID:
+            return snake
 
 
 def get_move(start, goal, grid):
+    
+
     return {"North"}
 
 
