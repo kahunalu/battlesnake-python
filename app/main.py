@@ -54,9 +54,14 @@ def move():
     get_mode(data)
     '''
 
+
     print "Start"
+
+    print "MOVE"
+    move = get_mode(data)
+
     return {
-        'move': get_mode(data),
+        'move': move,
         'taunt': taunts[(data['turn'] % len(taunts))]
     }
 
@@ -73,9 +78,9 @@ def end():
 
 def get_mode(data):
     if True:
-        default(data)
+        return default(data)
     elif False:
-        default(data)
+        return default(data)
 
 
 def default(data):
