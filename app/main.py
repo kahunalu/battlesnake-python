@@ -81,7 +81,7 @@ def get_mode(data):
     if shia["health"] < 40:
         return hungry(data)
     else:
-        return default(data)
+        return hungry(data)
 
 def hungry(data):
 
