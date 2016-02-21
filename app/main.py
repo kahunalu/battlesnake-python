@@ -81,7 +81,7 @@ def get_mode(data):
     if shia["health"] < 40:
         return hungry(data)
     else:
-        return defualt(data)
+        return hungry(data)
 
 def hungry(data):
 
@@ -113,7 +113,7 @@ def evaluate(coord, heatMap, level):
     if level == 5:
         return coord, value
 
-    heatMap[coord[1]][coord[0]] = 4
+    heatMap[coord[1]][coord[0]] = 100
 
     level = level + 1
 
