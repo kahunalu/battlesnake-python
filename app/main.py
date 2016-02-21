@@ -101,6 +101,7 @@ def defualt(data):
     heat_map = make_heat_map(data)
     goal, value = evaluate(shia["coords"][0], heat_map, 0)
 
+    print "THIS IS THE GOAL AND VALUE"
     print goal
     print value
 
