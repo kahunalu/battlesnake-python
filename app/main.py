@@ -77,22 +77,84 @@ def end():
     }
 
 def get_mode(data):
-    if True:
-        return default(data)
-    elif False:
-        return default(data)
+    shia = get_shia_snake(data)
+    if shia["health"] < 40:
+        return hungry(data)
+    else:
+        return defualt(data)
 
-def default(data):
+def hungry(data):
 
     shia = get_shia_snake(data)
     heat_map = make_heat_map(data)
-    food = food_eval(heat_map, data["food"], shia["coords"][0])
 
-    print "FOOD"
-    print food
+    if not len(data["food"]):
+        return defualt(data)
+
+    food = food_eval(heat_map, data["food"], shia["coords"][0])
 
     return get_move(shia["coords"][0], food, data)
 
+
+def defualt(data):
+
+    shia = get_shia_snake(data)
+    heat_map = make_heat_map(data)
+
+    goal, value = evaluate(shia["coords"][0], heat_map, 0)
+
+    return get_move(shia["coords"][0], goal, data)
+
+def evaluate(coord, heatMap, level):
+    value = 0
+
+    if level == 3:
+        return coord, value
+
+    heatMap[coord[1]][coord[0]] = 4
+
+    level = level + 1
+
+    north_coord, north_val = evaluate([coord[0],coord[1]-1], heatMap, level)
+    south_coord, south_val = evaluate([coord[0],coord[1]+1], heatMap, level)
+    east_coord, east_val = evaluate([coord[0]+1,coord[1]], heatMap, level)
+    west_coord, west_val = evaluate([coord[0]-1,coord[1]], heatMap, level)
+
+    if coord[1] == 0:
+        north = 100
+    else:
+        north = heatMap[coord[1]-1][coord[0]] + north_val
+
+    if coord[1] == len(coord):
+        south = 100
+    else:
+        south = heatMap[coord[1]+1][coord[0]] + south_val
+
+    if coord[0] == len(coord[0]):
+        east = 100
+    else:
+        east = heatMap[coord[1]][coord[0]+1] + east_val
+
+    if coord[0] == 0:
+        west = 100
+    else:
+        west = heatMap[coord[1]][coord[0]-1] + west_val
+
+    values = [north, south, east, west]
+
+    minimum = min(values)
+
+    if north == minimum:
+        return north_coord, north
+
+    if south == minimum:
+        return south_coord, south
+
+    if east == minimum:
+        return east_coord, east
+
+    if west == minimum:
+        return west_coord, west
 
 def get_shia_snake(data):
     for snake in data["snakes"]:
