@@ -96,8 +96,22 @@ def hungry(data):
     if not len(food):
         return default(data)
 
-    return get_move(shia["coords"][0], food, data)
+    walls = []
 
+    for level in range(1,4):
+        walls = []
+        for y, row in heat_map:
+            for x, cell in heat_map:
+               if cell > level:
+                   walls.append([x,y])
+
+        data["walls"] += walls
+
+        move = get_move(shia["coords"][0], food, data)
+
+        if move:
+            return move
+        pass
 
 def default(data):
     shia = get_shia_snake(data)
