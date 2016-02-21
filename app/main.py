@@ -93,6 +93,8 @@ def hungry(data):
 
 def default(data):
     shia = get_shia_snake(data)
+    heat_map = make_heat_map(data)
+    print heat_map
     return get_move(shia["coords"][0], data["food"][0], data)
 
 
@@ -154,6 +156,57 @@ def convert_direction(start, coord):
 
     print "south"
     return "south"
+
+
+def make_heat_map(data):
+    wall_coords = []
+    heatMap = []
+
+    for y in range(data["height"]):
+        row = []
+        for j in range(data["width"]):
+            row.append(0)
+        heatMap.append(row)
+
+
+    for snake in data["snakes"]:
+        if snake["id"] == SHIA_ID:
+            for body in snake["coords"][1:]:
+                wall_coords.append(body)
+        else:
+            for body in snake["coords"]:
+                wall_coords.append(body)
+
+    for wall in data["walls"]:
+        wall_coords.append(wall)
+
+
+    for wall in wall_coords:
+        y = wall[0]
+        x = wall[1]
+
+        heatMap[y][x] = 4
+
+        if y != 0:
+            heatMap[y-1][x] += 1
+
+        if y != (data["height"]-1):
+            heatMap[y+1][x] += 1
+
+        if x != 0:
+            heatMap[y][x-1] += 1
+
+        if x != (data["width"]-1):
+            heatMap[y][x+1] += 1
+
+    for y in range(data["height"]):
+        for x in range(data["width"]):
+            if x == 0 or x == (data["width"]-1):
+                heatMap[y][x] += 1
+            if y == 0 or y == (data["height"]-1):
+                heatMap[y][x] += 1
+
+    return heatMap
 
 '''
 Thanks to Laurent Luce for supplying A*
