@@ -125,12 +125,12 @@ def evaluate(coord, heatMap, level):
     else:
         north = heatMap[coord[1]-1][coord[0]] + north_val
 
-    if coord[1] == len(coord):
+    if coord[1] == len(heatMap):
         south = 100
     else:
         south = heatMap[coord[1]+1][coord[0]] + south_val
 
-    if coord[0] == len(coord[0]):
+    if coord[0] == len(heatMap[0]):
         east = 100
     else:
         east = heatMap[coord[1]][coord[0]+1] + east_val
