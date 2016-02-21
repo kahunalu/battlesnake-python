@@ -97,11 +97,12 @@ def hungry(data):
 
 
 def defualt(data):
-
     shia = get_shia_snake(data)
     heat_map = make_heat_map(data)
-
     goal, value = evaluate(shia["coords"][0], heat_map, 0)
+
+    print goal
+    print value
 
     return get_move(shia["coords"][0], goal, data)
 
