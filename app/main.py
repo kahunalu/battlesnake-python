@@ -111,7 +111,6 @@ def hungry(data):
 
         if move:
             return move
-        pass
 
 def default(data):
     shia = get_shia_snake(data)
