@@ -100,8 +100,8 @@ def hungry(data):
 
     for level in range(1,4):
         walls = []
-        for y, row in heat_map:
-            for x, cell in heat_map:
+        for y, row in enumerate(heat_map):
+            for x, cell in enumerate(heat_map):
                if cell > level:
                    walls.append([x,y])
 
