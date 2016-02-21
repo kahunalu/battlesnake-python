@@ -81,7 +81,7 @@ def get_mode(data):
     if shia["health"] < 40:
         return hungry(data)
     else:
-        return hungry(data)
+        return default(data)
 
 def hungry(data):
 
@@ -89,74 +89,61 @@ def hungry(data):
     heat_map = make_heat_map(data)
 
     if not len(data["food"]):
-        return defualt(data)
+        return default(data)
 
     food = food_eval(heat_map, data["food"], shia["coords"][0])
+
+    if not len(food):
+        return default(data)
 
     return get_move(shia["coords"][0], food, data)
 
 
-def defualt(data):
+def default(data):
     shia = get_shia_snake(data)
     heat_map = make_heat_map(data)
     goal, value = evaluate(shia["coords"][0], heat_map, 0)
 
-    print "THIS IS THE GOAL AND VALUE"
-    print goal
-    print value
-
     return get_move(shia["coords"][0], goal, data)
 
-def evaluate(coord, heatMap, level):
+def evaluate(coord, heatMap):
     value = 0
-
-    if level == 5:
-        return coord, value
-
-    heatMap[coord[1]][coord[0]] = 100
-
-    level = level + 1
-
-    north_coord, north_val = evaluate([coord[0],coord[1]-1], heatMap, level)
-    south_coord, south_val = evaluate([coord[0],coord[1]+1], heatMap, level)
-    east_coord, east_val = evaluate([coord[0]+1,coord[1]], heatMap, level)
-    west_coord, west_val = evaluate([coord[0]-1,coord[1]], heatMap, level)
 
     if coord[1] == 0:
         north = 100
     else:
-        north = heatMap[coord[1]-1][coord[0]] + north_val
+        north = heatMap[coord[1]-1][coord[0]]
 
     if coord[1] == (len(heatMap)-1):
         south = 100
     else:
-        south = heatMap[coord[1]+1][coord[0]] + south_val
+        south = heatMap[coord[1]+1][coord[0]]
 
     if coord[0] == (len(heatMap[0])-1):
         east = 100
     else:
-        east = heatMap[coord[1]][coord[0]+1] + east_val
+        east = heatMap[coord[1]][coord[0]+1]
 
     if coord[0] == 0:
         west = 100
     else:
-        west = heatMap[coord[1]][coord[0]-1] + west_val
+        west = heatMap[coord[1]][coord[0]-1]
 
     values = [north, south, east, west]
 
     minimum = min(values)
 
     if north == minimum:
-        return north_coord, north
+        return [coord[0],coord[1]-1]
 
     if south == minimum:
-        return south_coord, south
+        return [coord[0],coord[1]+1]
 
     if east == minimum:
-        return east_coord, east
+        return [coord[0]+1,coord[1]]
 
     if west == minimum:
-        return west_coord, west
+        return [coord[0]-1,coord[1]]
 
 def get_shia_snake(data):
     for snake in data["snakes"]:
@@ -420,14 +407,7 @@ def food_eval(heat_map, data_food, our_head):
             print food
             if(is_food_safe(food[1], 2, heat_map)):
                 return food[1]
-        for food in food_distance:
-            print food
-            if(is_food_safe(food[1], 3, heat_map)):
-                return food[1]
-        for food in food_distance:
-            print food
-            if(is_food_safe(food[1], 4, heat_map)):
-                return food[1]
+        return []
 
 def get_distance(our_head, food_coords):
     x_distance = abs(our_head[0] - food_coords[0])
