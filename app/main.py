@@ -82,20 +82,16 @@ def get_mode(data):
     elif False:
         return default(data)
 
-
-def hungry(data):
-    shia = get_shia_snake(data)
-
-    if not len(data["food"]):
-        return default(data)
-
-    return get_move(shia["coords"][0], data["food"][0], data)
-
 def default(data):
+
     shia = get_shia_snake(data)
     heat_map = make_heat_map(data)
-    print heat_map
-    return get_move(shia["coords"][0], data["food"][0], data)
+    food = food_eval(heat_map, data["food"], shia["coords"][0])
+
+    print "FOOD"
+    print food
+
+    return get_move(shia["coords"][0], food, data)
 
 
 def get_shia_snake(data):
@@ -137,11 +133,6 @@ def get_move(start, goal, data):
 
 
 def convert_direction(start, coord):
-
-    print "DEBUG"
-
-    print start
-    print coord
 
     if start[0] > coord[0]:
         print "west"
@@ -347,6 +338,40 @@ class AStar(object):
                         # add adj cell to open list
                         heapq.heappush(self.opened, (adj_cell.f, adj_cell))
 
+
+def food_eval(heat_map, data_food, our_head):
+        food_distance = []
+        for food in data_food:
+            food_distance.append(get_distance(our_head, food))
+        sorted(food_distance)
+        for food in food_distance:
+            print food
+            if(is_food_safe(food[1], 0, heat_map)):
+                return food[1]
+        for food in food_distance:
+            print food
+            if(is_food_safe(food[1], 1, heat_map)):
+                return food[1]
+        for food in food_distance:
+            print food
+            if(is_food_safe(food[1], 2, heat_map)):
+                return food[1]
+        for food in food_distance:
+            print food
+            if(is_food_safe(food[1], 3, heat_map)):
+                return food[1]
+        for food in food_distance:
+            print food
+            if(is_food_safe(food[1], 4, heat_map)):
+                return food[1]
+
+def get_distance(our_head, food_coords):
+    x_distance = abs(our_head[0] - food_coords[0])
+    y_distance = abs(our_head[1] - food_coords[1])
+    return [ x_distance + y_distance , food_coords]
+
+def is_food_safe(food_coords, threshold, heat_map):
+    return heat_map[food_coords[0]][food_coords[1]] <= threshold
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
