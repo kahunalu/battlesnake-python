@@ -110,7 +110,7 @@ def defualt(data):
 def evaluate(coord, heatMap, level):
     value = 0
 
-    if level == 3:
+    if level == 5:
         return coord, value
 
     heatMap[coord[1]][coord[0]] = 4
